@@ -1,0 +1,21 @@
+name: data factory deployment
+
+on:
+    workflow_dispatch:
+jobs:
+    release:
+        environment: CN2POC
+        #You also can use the self-hosted runners.
+        runs-on: self-hosted
+        steps:
+        #Checks out your repository under $GITHUB_WORKSPACE, so your job can access it.
+        
+        - name: Login via Az module
+          uses: azure/login@v1
+          with:
+            creds: ${{ secrets.AZURE_China_CREDENTIALS }}
+            environment: 'AzureChinaCloud'
+            enable-AzPSSession: true
+        - name: 'Run az commands'
+          run: |
+            az account show
